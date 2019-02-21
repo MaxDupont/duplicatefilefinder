@@ -1,20 +1,17 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileFilter;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 public class Main {
 
     static int compare(File f1, File f2) throws IOException {
-        try(FileInputStream fis1 = new FileInputStream(f1);
-            FileInputStream fis2 = new FileInputStream(f2)) {
+        try(BufferedInputStream bis1 = new BufferedInputStream(new FileInputStream(f1));
+            BufferedInputStream bis2 = new BufferedInputStream(new FileInputStream(f1))) {
 
             while(true) {
-                int b1 = fis1.read();
-                int b2 = fis2.read();
+                int b1 = bis1.read();
+                int b2 = bis2.read();
 
                 if (b1 == -1 && b2 == -1) {
                     return 0;
