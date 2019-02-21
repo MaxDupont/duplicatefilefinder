@@ -51,11 +51,23 @@ public class Main {
 
         List<File> files = getAllFiles(new File("D:\\Java\\Projects\\duplicteFileFinder"));
 
-        for (int i = 0; i < files.size(); i++) {
-            for (int j = i+1; j < files.size(); j++) {
-                if (compare(files.get(i), files.get(j)) == 0) {
-                    System.out.println("Файлы " + files.get(i) + " и " + files.get(j) + " равны!");
+        TreeSet<File> ts = new TreeSet(new Comparator<File>() {
+            @Override
+            public int compare(File o1, File o2) {
+                try {
+                    return Main.compare(o1, o2);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
+            }
+        });
+
+        for (File f : files) {
+            if (!ts.contains(f)) {
+                ts.add(f);
+            } else {
+                File old = ts.floor(f);
+                System.out.println("Файл " + f + " такой же как " + old);
             }
         }
     }
